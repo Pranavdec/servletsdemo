@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q10_7</title>
+</head>
+<body>
+<script>
+    function disable_employee(){
+        document.getElementById("eid").disabled = true;
+        document.getElementById("name").disabled = true;
+        document.getElementById("job-title").disabled = true;
+        document.getElementById("dob").disabled = true;
+        document.getElementById("joining-date").disabled = true;
+        document.getElementById("salary").disabled = true;
+        document.getElementById("dname").disabled = false;
+        document.getElementById("location").disabled = false;
+        document.getElementById("eid").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("job-title").value = "";
+        document.getElementById("dob").value = "";
+        document.getElementById("joining-date").value = "";
+        document.getElementById("salary").value = "";
+    }
+    function disable_department(){
+        document.getElementById("eid").disabled = false;
+        document.getElementById("name").disabled = false;
+        document.getElementById("job-title").disabled = false;
+        document.getElementById("dob").disabled = false;
+        document.getElementById("joining-date").disabled = false;
+        document.getElementById("salary").disabled = false;
+        document.getElementById("dname").disabled = true;
+        document.getElementById("location").disabled = true;
+        document.getElementById("dname").value = "";
+        document.getElementById("location").value = "";
+    }
+
+    function check_values(event){
+
+        // Validate Department ID
+        let did = document.getElementById("did").value;
+        let pattern = /[a-zA-Z]*/;
+        if(did === ""){
+            alert("Department ID cannot be empty");
+            event.preventDefault();
+            return false;
+        }
+        if(did.length > 9){
+            alert("Department ID cannot be more than 9 characters");
+            event.preventDefault();
+            return false;
+        }
+
+        // Validate EmployeeID
+        let eid = document.getElementById("eid").value;
+        if(!document.getElementById("eid").disabled && (eid === "" || eid.length > 9)){
+            alert("Employee ID cannot be empty and must not exceed 9 characters");
+            event.preventDefault();
+            return false;
+        }
+
+        // Validate Name
+        let name = document.getElementById("name").value;
+        if(!document.getElementById("name").disabled && (name === "" || name.length > 15) && pattern.test(name)){
+            alert("Name cannot be empty and must not exceed 15 characters and must not contain numbers");
+            event.preventDefault();
+            return false;
+        }
+
+        // Validate Job Title
+        let jobTitle = document.getElementById("job-title").value;
+        if(!document.getElementById("job-title").disabled && (jobTitle === "" || jobTitle.length > 20) && pattern.test(jobTitle)){
+            alert("Job Title cannot be empty and must not exceed 20 characters and must not contain numbers");
+            event.preventDefault();
+            return false;
+        }
+
+        // Validate Salary if it's a number
+        let salary = document.getElementById("salary").value;
+        if(!document.getElementById("salary").disabled && (salary === "" || isNaN(salary))){
+            alert("Salary cannot be empty and must be a number");
+            event.preventDefault();
+            return false;
+        }
+
+        // Validate Department Name
+        let dname = document.getElementById("dname").value;
+        if(!document.getElementById("dname").disabled && (dname === "" || dname.length > 20) && pattern.test(dname)){
+            alert("Department Name cannot be empty and must not exceed 20 characters and must not contain numbers");
+            event.preventDefault();
+            return false;
+        }
+
+        // Validate Department Location
+        let location = document.getElementById("location").value;
+        if(!document.getElementById("location").disabled && (location === "" || location.length > 20) && pattern.test(location)){
+            alert("Department Location cannot be empty and must not exceed 20 characters and must not contain numbers");
+            event.preventDefault();
+            return false;
+        }
+
+        let joiningDate = document.getElementById("joining-date").value;
+        let dob = document.getElementById("dob").value;
+
+        if(!document.getElementById("joining-date").disabled && joiningDate === ""){
+            alert("Joining Date cannot be empty");
+            event.preventDefault();
+            return false;
+        }
+
+        if(!document.getElementById("dob").disabled && dob === ""){
+            alert("Date of Birth cannot be empty");
+            event.preventDefault();
+            return false;
+        }
+
+        if(joiningDate !== "" && dob !== ""){
+            let joiningDateObj = new Date(joiningDate);
+            let dobObj = new Date(dob);
+            if(joiningDateObj < dobObj){
+                alert("Joining Date cannot be before Date of Birth");
+                event.preventDefault();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+</script>
+<form method="post" onsubmit="return check_values(event)"  >
+
+    <label for="department">Department</label>
+    <input type="radio" id="department" name="selection" onclick="disable_employee()" value="dep" ><br>
+    <label for="employee">Employee</label>
+    <input type="radio" id="employee" name="selection" onclick="disable_department()" checked value="emp"><br>
+    <label for="eid">EmployeeID</label>
+    <input type="text" id="eid" name="eid"><br>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name"><br>
+    <label for="job-title">Job Title</label>
+    <input type="text" id="job-title" name="job-title"><br>
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" name="dob"><br>
+    <label for="joining-date">Joining Date</label>
+    <input type="date" id="joining-date" name="joining-date"><br>
+    <label for="salary">Salary</label>
+    <input type="text" id="salary" name="salary"><br>
+    <label for="did">Department ID</label>
+    <input type="text" id="did" name="did"><br>
+    <label for="dname">Department Name</label>
+    <input type="text" id="dname" name="dname" disabled="true"><br>
+    <label for="location">Department Location</label>
+    <input type="text" id="location" name="location" disabled="true"><br>
+    <input type="submit" value="Submit">
+    <input type="reset">
+
+</form>
+<a href="/app_war/">Home</a>
+</body>
+</html>
